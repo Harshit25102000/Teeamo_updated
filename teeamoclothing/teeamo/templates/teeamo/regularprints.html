@@ -1,0 +1,86 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} Regular Prints {% endblock %}
+
+{% block body %}  <div class="small-container">
+        <div class="row row-2">
+            <h2>Regular Prints</h2>
+            <select name ="sort" id="sort-list" onchange="location = finalurl();">
+            <option value="" id = "placeholder" disabled selected hidden>Default Sort</option>
+            <option id ="price" value="price">Price Low to High</option>
+            <option id ="-price" value="-price">Price High to Low</option>
+            <option id = "-pub_date" value="-pub_date">Sort by latest</option>
+
+        </select>
+
+        </div>
+        <div class="row">
+        {% for item in products %}
+            <div class="col-4">
+                <a href="/teeamo/productdetail/{{item.id}}"><img src="{{item.image1.url}}"></a>
+                <h4>{{item.product_name}}</h4>
+
+                <p>Rs {{item.price}}</p>
+            </div>
+
+        {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+    <nav class="pagination">
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" tabindex="-1" aria-disabled="true"
+            href="/teeamo/regularprints/?page={{ page_obj.previous_page_number }}&ordering={{ ordering }}">&#8592;</a>
+        </li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+        {% if i == page_obj.number%}
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="/teeamo/regularprints/?page={{i}}&ordering={{ ordering }}" span class="visually-hidden">{{i}}</span></a>
+        </li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="/teeamo/regularprints/?page={{i}}&ordering={{ ordering }}">{{i}}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" tabindex="-1" href="/teeamo/regularprints/?page={{ page_obj.next_page_number }}&ordering={{ ordering }}">&#8594;
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+
+    </div>
+
+<script>
+// for getting the sorting status to be displayed in sorting dropdown placeholder
+  function get(name) {
+    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
+      return decodeURIComponent(name[1]);
+  }
+
+  if(get('ordering'))
+
+  document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML;
+
+
+// for getting url after applying ordering
+  function finalurl() {
+    var url = new URL(window.location.href);
+    var search_params = url.searchParams;
+    search_params.set('ordering', document.getElementById("sort-list").value);
+    url.search = search_params.toString();
+    var new_url = url.toString();
+    return new_url
+  }
+
+
+
+</script>
+{% endblock %}
+

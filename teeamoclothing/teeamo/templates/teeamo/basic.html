@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script type="text/javascript">
+    var user = '{{request.user}}'
+
+    function getToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getToken('csrftoken');
+
+function getCookie(name) {
+		    // Split cookie string and get all individual name=value pairs in an array
+		    var cookieArr = document.cookie.split(";");
+
+		    // Loop through the array elements
+		    for(var i = 0; i < cookieArr.length; i++) {
+		        var cookiePair = cookieArr[i].split("=");
+
+		        /* Removing whitespace at the beginning of the cookie name
+		        and compare it with the given string */
+		        if(name == cookiePair[0].trim()) {
+		            // Decode the cookie value and return
+		            return decodeURIComponent(cookiePair[1]);
+		        }
+		    }
+
+		    // Return null if not found
+		    return null;
+		}
+
+		var cart = JSON.parse(getCookie('cart'))
+		if (cart == undefined){
+			cart = {}
+			console.log('Cart Created!', cart)
+			document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+		}
+		console.log('cart',cart)
+
+
+
+
+
+    </script>
+
+</head>
+
+<body>
+{% load static %}
+
+<nav class="navbar">
+    <a href="{% url 'Home' %}"><img src='{% static "home/logocropped.png" %}'></a>
+    <img src='{% static "home/menu.png" %}' alt="menu" class="menu-icon">
+    <ul id="menuitems">
+        <li><a href="{% url 'Home' %}">Home</a></li>
+        <li><a href="#">Products</a>
+            <ul>
+                <li><a href="{% url 'largeprints' %}">Large Prints</a></li>
+
+                <li><a href="{% url 'regularprints' %}">Regular Prints</a></li>
+                <li><a href="{% url 'tiedye' %}">Tiedye</a></li>
+            </ul>
+        </li>
+        <li><a href="{% url 'allproducts' %}">All Products</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="#">My Account</a></li>
+        <li>
+            <form method="GET" action="/teeamo/searchresult">
+                <input type="text" name="search" id="search" type="search" placeholder="Find a black T-Shirt"
+                       id="searchbox">
+            </form>
+        </li>
+
+        <li><a href="{% url 'cart' %}"><i class="fa" style="font-size:24px">&#xf07a;</i></a>
+            <span>{{ order.get_cart_items }}</span></li>
+
+    </ul>
+</nav>
+
+{% block body %}{% endblock %}
+
+<!---footer--->
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Developed by</h3>
+                <h4>Harshit Singh</h4>
+                <p class="footer-email">harshit25102000@gmail.com</p>
+            </div>
+            <div class="footer-col-2">
+                <img src='{%static "home/logocropped.png" %}'>
+                <p>Let's get yourself a new T-Shirt according to your size and
+                    imaginations.</p>
+                </p>
+            </div>
+             <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+
+                    <ul>
+                        <a href="{% url 'policy' %}"><li>Privacy Policy</li></a>
+                           <a href="{% url 'policy' %}"><li>Terms and Conditions</li></a>
+                           <a href="{% url 'policy' %}"><li>Shipping Policy</li></a>
+                           <a href="{% url 'policy' %}"><li>Returns/Refunds</li></a>
+                    </ul>
+                </div>
+
+            <div class="footer-col-3">
+                <h3>Contact Us</h3>
+                <ul>
+                    <a href="mailto: harshit25102000@gmail.com">
+                        <li>Email</li>
+                    </a>
+                    <a href="https://www.instagram.com/teeamoclothing/">
+                        <li>Instagram</li>
+                    </a>
+                    <a href="https://wa.me/919044592578">
+                        <li>Wattsapp</li>
+                    </a>
+                    <li>Call: 9029081071</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2021 - Teeamoclothing </p>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+<!---js for toggle menu----->
+<script async defer>
+        const cartIcon = document.querySelector('.menu-icon');
+        const menuItems = document.querySelector('.menuitems');
+
+        cartIcon.addEventListener('click', () => {
+            let state = menuitems.style.display;
+            if (state === 'none') {
+                menuitems.style.display = 'block';
+            } else {
+                menuitems.style.display = 'none';
+            }
+        })
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+
+</html>

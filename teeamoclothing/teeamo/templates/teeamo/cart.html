@@ -1,0 +1,61 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+
+ <div class="small-container cart-page" >
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>
+                    <div class="cart-info">
+                        <a href="/teeamo/productdetail/{{item.product.id}}"><img src="{{item.product.image1.url}}" ></a>
+                        <div>
+                            <p>{{item.product.product_name}}</p>
+                            <small>Rs {{item.product.price}}</small>
+                            <br>
+                            <a data-product={{item.product.id}} data-action="delete" class="update-cart" href ="{% url 'cart' %}">Remove
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td><div class="number-input-checkout">
+                    <button data-product={{item.product.id}} data-action="remove" class="update-cart"
+                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                    ></button>
+                    <input class="quantity" min="0" name="quantity" value={{item.quantity}} type="number"  onkeydown="return false">
+                    <button data-product={{item.product.id}} data-action="add"
+                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                    class="plus update-cart"></button>
+                  </div>
+                  <a href="{% url 'cart' %}"><button class="cart-update-button">Update</button></a>
+                  </td>
+                <td>{{item.get_total}}</td>
+            </tr>
+            {% endfor %}
+
+
+        </table>
+        <div class="total-price">
+            <table>
+
+                <tr>
+                    <td>Total</td>
+                    <td>{{ order.get_cart_total }}</td>
+                </tr>
+                <tr>
+                    <td><a href="{% url 'checkout' %}"><input type="submit" value="Continue to checkout"
+                    class="checkout-btn"></a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

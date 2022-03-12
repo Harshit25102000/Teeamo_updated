@@ -1,0 +1,100 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} {{products.product_name}} {% endblock %}
+
+{% block body %}
+
+
+
+<div class="small-container single-product">
+        <div class="row">
+            <div class="col-2">
+                <img src="{{products.image1.url}}" alt="" width=100% id="productimg">
+                <div class="small-img-row">
+                    <div class="small-img-col">
+                        <img src="{{products.image2.url}}" alt="" width="100%" class="small-img">
+                    </div>
+                    <div class="small-img-col">
+                        <img src="{{products.image3.url}}" alt="" width="100%"class="small-img"class="small-img">
+                    </div><div class="small-img-col">
+                        <img src="{{products.image4.url}}" alt="" width="100%"class="small-img"class="small-img">
+                    </div><div class="small-img-col">
+                        <img src="{{products.image5.url}}" alt="" width="100%"class="small-img"class="small-img">
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+               <p>{{products.category}}</p>
+               <h1> {{products.product_name}} </h1>
+               <h4>Rs {{products.price}}</h4>
+               <form method="POST" action='/teeamo/addtocart/'>
+        {% csrf_token %}
+               <select name="size" id="size"
+               class="addtocartbtn">
+                   <option value="">Select Size</option>
+                   <option value="xxxl">XXXL</option>
+                   <option value="xxl">XXL</option>
+                   <option value="xl">XL</option>
+                   <option value="large">Large</option>
+                   <option value="medium">Medium</option>
+                   <option value="small">Small</option>
+                   <option value="xsmall">Xsmall</option>
+               </select>
+                <input type="hidden" name="productid" id="productid" value="{{ products.id }}">
+               <input type="number" name="quantity" id="quantity" value="1">
+               <button type="submit"  id="addtocartbtn ">Add To
+               Cart</button>
+               </form>
+               <h3>Product Description </h3>
+               <br>
+               <p>{{products.desc}}</p>
+            </div>
+        </div>
+    </div>
+
+
+<!-- title -->
+<div class="small-container">
+    <div class="row row-2">
+        <h2>Related Products</h2>
+
+    </div>
+</div>
+
+    <div class="small-container">
+
+        <div class="row">
+        {% for item in related %}
+            <div class="col-4">
+                <a href="/teeamo/productdetail/{{item.id}}"> <img src="{{item.image1.url}}"></a>
+                <h4>{{item.product_name}}</h4>
+
+                <p>Rs {{item.price}}</p>
+            </div>
+
+        {% endfor %}
+        </div>
+
+
+
+    </div>
+<script>
+    var productimg = document.getElementById("productimg");
+    var SmallImg= document.getElementsByClassName("small-img")
+    SmallImg[0].onclick=function(){
+        productimg.src=SmallImg[0].src;
+    }
+    SmallImg[1].onclick=function(){
+        productimg.src=SmallImg[1].src;
+    }
+    SmallImg[2].onclick=function(){
+        productimg.src=SmallImg[2].src;
+    }
+    SmallImg[3].onclick=function(){
+        productimg.src=SmallImg[3].src;
+    }
+</script>
+{% endblock %}
+
+
+

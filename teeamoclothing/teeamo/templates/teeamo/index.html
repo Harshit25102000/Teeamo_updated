@@ -1,0 +1,113 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+{% load static %}
+
+
+    <div class="container" id="header">
+        <div class="row">
+            <div class="col-2">
+                <h1>Give yourself<br>A New Tee</h1>
+                <p>Shop through a lot of options <br>Or customise your t-shirt your way. </p>
+                <a href="{% url 'allproducts' %}" class="btn">Explore &#x1F50E;</a>
+            </div>
+            <div class="col-2">
+                <img src='{% static "home/homepagebg4.png" %}'>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="categories">
+        <div class="small-container">
+            <h2>Featured Categories</h2>
+            <div class="row">
+                <div class="col-3">
+                    <a href="{% url 'largeprints' %}"><img src='{% static "large prints/20211106_163319.jpg" %}'></a>
+                    <h4>Large Prints</h4>
+                </div>
+
+                <div class="col-3">
+                    <a
+                    href="{% url 'regularprints' %}"><img src='{% static "Regular prints/20210830_000923.jpg" %}'></a>
+                    <h4>Regular Prints</h4>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'tiedye' %}"><img src='{% static "tiedye/20211104_135727.jpg" %}'></a>
+                    <h4>Tiedye</h4>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!----featured products---->
+    <div class="small-container">
+        <h2 class="title">Featured Products</h2>
+        <div class="row">
+        {% for product in featured_products %}
+            <div class="col-4">
+                <a href="/teeamo/productdetail/{{product.id}}"><img src="{{product.image1.url}}"></a>
+                <h4>{{product.product_name}}</h4>
+
+                <p>Rs {{product.price}}</p>
+            </div>
+        {% endfor %}
+
+        </div>
+
+
+        <h2 class="title">Recently Added</h2>
+        <div class="row">
+        {% for product in recent_products %}
+            <div class="col-4">
+                <a href="/teeamo/productdetail/{{product.id}}"><img src="{{product.image1.url}}"></a>
+                <h4>{{product.product_name}}</h4>
+
+                <p>Rs {{product.price}}</p>
+            </div>
+        {% endfor %}
+
+        </div>
+
+
+
+    </div>
+
+    <!---testimonials-->
+    <div class="testimonial">
+        <div class="small-container">
+            <div class="row">
+            {% for item in reviews %}
+                <div class="col-3">
+
+                    <i class="fa fa-quote-left" aria-hidden="true"></i>
+
+                    <p>{{item.content}}</p>
+                        <i class="fa fa-quote-right" aria-hidden="true"></i>
+                    <div class="rating">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                    </div>
+                    <img src="{{item.image.url}}">
+                    <h3>{{item.name}}</h3>
+                </div>
+
+                {% endfor %}
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
