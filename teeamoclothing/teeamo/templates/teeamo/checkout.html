@@ -14,7 +14,7 @@
                         <label for="name"> Full Name*</label>
                         <input type="text" class="checkoutformtext" id="name" name="name" placeholder="" required/>
                         <label for="email"> Email*</label>
-                        <input type="text" class="checkoutformtext" id="email" name="email" placeholder="" required/>
+                        <input type="email" class="checkoutformtext" id="email" name="email" placeholder="" required/>
                         <label for="address1"> Address Line 1*</label>
                         <input type="text" class="checkoutformtext" id="address1" name="address1" placeholder=""
                                required/>
@@ -114,7 +114,7 @@
             {% endfor %}
             <hr>
             <p>Total <span class="price" style="color:black"><b>Rs {{ order.get_cart_total }}</b></span></p>
-            <button type="button" class="back-to-cart-button">Back to Cart</button>
+            <a href="{% url 'cart' %}"><button type="button" class="back-to-cart-button">Back to Cart</button></a>
         </div>
 
     </div>

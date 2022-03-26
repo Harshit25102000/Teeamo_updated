@@ -990,4 +990,453 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
+/* Account pages CSS begins */
 
+.account-page {
+  width: 87%;
+  margin:4% 6%;
+  /* width:960px;  use your width here */
+  display: flex;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  justify-content: space-around;
+  background-color: gainsboro;
+}
+
+
+@media (max-width: 600px) {
+  .profile {
+    flex: 100%;
+    flex-direction: column;
+  }
+  .account-details{
+    flex: 100%;
+    flex-direction: column;
+  }
+  .username{
+    font-size:20px;
+  }
+}
+.account-page .profile{
+  flex: 30%;
+}
+.account-page .account-details{
+  flex:60%;
+}
+.account-page .profile .profile-details{
+  width:292px;
+  height: 48px;
+  margin: 0 auto;
+  margin-bottom: 60px;
+  text-align: center;
+  overflow: none;
+}
+
+.username{
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.account-page-ul{
+  list-style: none;
+  padding: 10px;
+}
+.account-page-ul-li{
+  margin-bottom: 5px;
+}
+.account-page-ul-li-a{
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 1px solid black;
+  text-align: left;
+  padding: 5px 8px;
+  display: block;
+}
+.account-page-ul-li-a-span{
+  float:right;
+}
+ .account-page-ul-li-a:hover{
+  background-color: black;
+  color: white;
+}
+#profile-no{
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  width: 90%;
+  padding:10px 8px;
+  margin-top:20px;
+  display: block;
+  border: none;
+
+}
+#profile-fname{
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  width: 90%;
+  padding:10px 8px;
+  margin-top:20px;
+  display: block;
+  border: none;
+
+}
+
+#profile-email{
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  width: 90%;
+  padding:10px 8px;
+  margin-top:20px;
+  display: block;
+  border: none;
+
+}
+
+#profile-adr{
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  width: 90%;
+  padding:10px 8px;
+  margin-top:20px;
+  display: block;
+  border: none;
+
+}
+
+#profile-city{
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  width: 90%;
+  padding:10px 8px;
+  margin-top:20px;
+  display: block;
+  border: none;
+
+}
+
+#profile-no{
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  width: 90%;
+  padding:10px 8px;
+  margin-top:20px;
+  display: block;
+  border: none;
+
+}
+
+#profile-state{
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  width: 90%;
+  padding:10px 8px;
+  margin-top:20px;
+  display: block;
+  border: none;
+}
+
+#profile-update{
+  cursor: pointer;
+  background: black;
+    color: white;
+    width: 90%;
+    padding:10px 8px;
+    border-radius: 17px;
+    height: 31px;
+    font-size: 16px;
+}
+
+.home-page{
+  margin: 70px 6%;
+    text-align-last: center;
+
+    user-select: auto;
+
+}
+
+@media (max-width: 600px) {
+  .home-page{
+    font-size: 15px;
+  }
+}
+
+.account-details-heading{
+  text-align-last: center;
+}
+
+.account-password-forms{
+ margin:5% 26%;
+}
+
+.account-password-submit{
+  cursor: pointer;
+}
+.account-password-submit:hover{
+  background-color: black;
+ color: white;
+}
+.change-pw-tag{
+    text-align-last: center;
+    font-weight: bold;
+}
+
+/* password reset pages */
+
+.forgotpassword-page{
+
+
+    padding: 100px 0;
+    background: radial-gradient(#f2f2f2, #e6e6e6);
+
+}
+
+
+.forgotpassword-page h3{
+
+
+  text-align-last: center;
+
+
+}
+.forgotpassword-submit{
+
+    cursor: pointer;
+    background-color:black;
+    color:white;
+}
+
+.forgotpassword-submit:hover{
+
+
+    background-color:white;
+    color:black;
+}
+
+.forgotpassword-page form{
+width: 21%;
+    margin: 20px 39%;
+    }
+
+@media (max-width: 600px) {
+  .forgotpassword-page form{
+    margin: 37px 18%;
+    width: 63%;
+  }
+  .forgotpassword-page h3{
+  font-size:14px;
+}
+
+}
+
+.password-reset-sent{
+text-align-last: center;
+
+    margin: 10% 23%;
+}
+
+.password-reset-complete h3{
+text-align-last: center;
+font-size:30px;
+margin: 8% 2% 4%;
+}
+
+.password-reset-complete a{
+background-color: #cccccc;;
+    margin: 2% 43%;
+    color:black;
+    font-size: 25px;
+    display: inline-block;
+    margin-bottom: 6%;
+    width: 14%;
+    text-align-last: center;
+    border-radius: 6%;
+}
+.password-reset-complete a:hover{
+    color:black;
+    background-color:white;
+}
+
+.password-reset-confirm form{
+width: 21%;
+    margin: 20px 39%;
+}
+
+.helptext{
+display: none;
+}
+
+.password-reset-confirm{
+    margin: 9% 2%;
+    text-align-last: center;
+}
+
+@media (max-width: 600px) {
+    .password-reset-confirm form{
+        margin: 20px 32%;
+    width: 36%;
+}
+}
+
+/* style for order-receipt */
+
+.order_reciept{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.order_reciept_container{
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.order_reciept_body{
+  width: 100%;
+  display: inline-block;
+  justify-content: space-between;
+}
+
+.order_reciept_row{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  font-weight: bold;
+}
+.order_reciept_container_header{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 4% 8%;
+}
+.order_h5{
+  font-size: x-large;
+  font-weight: bold;
+  margin: 0% 2%;
+}
+
+.order_reciept_container4{
+  display: flex;
+  flex-wrap: wrap;
+}
+.reciept{
+  font-size: larger;
+  font-weight: bold;
+  margin:0% 5%;
+}
+.cover{
+  margin: 5% 5%;
+}
+.order_reciept_container5{
+  margin-bottom: 1%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #cccccc;
+}
+.order_pro_name{
+  margin: 2% 2%;
+}
+.order_color{
+  margin: 2% 2%;
+}
+.order_size{
+  margin: 2% 2%;
+}
+.order_quantity{
+  margin: 2% 2%;
+}
+.order_price{
+  margin: 2% 2%;
+}
+.order_details{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.odetails{
+  font-weight: bold;
+  margin-left: 5%;
+  margin-bottom: 2%;
+}
+
+.odate{
+  margin-left: 5%;
+  margin-bottom: 0.5%;
+}
+.onumber{
+  margin-left: 5%;
+  margin-bottom: 0.5%;
+}
+.orders_total{
+  margin-left: 68%;
+}
+.order_total{
+  margin-left: 68%;
+}
+.ototal{
+  display: flex;
+  font-size: x-large;
+  font-weight: bold;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px){
+  .ototal{
+    font-size: large;
+  }
+}
+
+
+.order-receipt-images{margin: 8% 10%;
+    width: 100px;
+    user-select: auto;
+    height: 100px;
+}
+
+/* The alert message box */
+.alert-message {
+  padding: 20px;
+  background-color: black; /* Red */
+  color: white;
+  margin-bottom: 0px;
+}
+
+/* The close button */
+.closebtn-message {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn-message:hover {
+  color: black;
+}
+
+#addtocartbtn{
+font-size: 20px;
+    background: black;
+    user-select: auto;
+    color: white;
+    width: 28%;
+    border-radius: 28px;
+    padding: 1%;
+    cursor: pointer;
+}
+
+#addtocartbtn:hover {
+background:#333333;
+}

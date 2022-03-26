@@ -6,7 +6,7 @@
 {% block body %}
 {% load static %}
 
- <!---------accont-page--------->
+ <!---------account-page--------->
     <div class="account-page">
         <div class="container">
             <div class="row">
@@ -21,12 +21,12 @@
                             <hr id="Indicator">
                         </div>
 
-                        <form id="LoginForm">
+                        <form id="LoginForm" action = '/teeamo/handle_login/' method="POST" name="LoginForm" >
                         {% csrf_token %}
                              <input type="email" name="email" placeholder="Email" required>
-                            <input type="password" name="password1" placeholder="Password" required>
+                            <input type="password" name="password" placeholder="Password" required>
                             <button type="submit" class="btn">Log In</button>
-                            <a href="">Forgot Password</a>
+                            <a href="{% url 'reset_password' %}">Forgot Password</a>
                         </form>
 
                         <form action='/teeamo/signup/' method="POST" name="signup" id="RegForm">

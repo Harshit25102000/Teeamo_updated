@@ -1,0 +1,73 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} Order Detail {% endblock %}
+
+
+{% block body %}
+{% load static %}
+
+<section class="order_receipt">
+    <div class="order_reciept_container">
+        <div class="order_reciept_container1">
+            <div class="order_reciept_container2">
+                <div class="order_reciept_container3">
+                    <div class="order_reciept_container_header">
+                        <h5 class="order_h5">Thank you for Ordering, <span>{{user}}</span>!</h5>
+                    </div>
+                    <div class="order_reciept_container4">
+                        <div class="reciept">
+                            <p>Items in your Order</p>
+                        </div>
+                    </div>
+                    <div class="cover">
+                        {% for item in items %}
+                        <div class="order_reciept_container5">
+                            <div class="order_reciept_body">
+                                <div class="order_reciept_row">
+                                    <div class="order_reciept_img1">
+                                        <img src="{{item.product.image1.url}}" alt="t-shirt/shirt" class="order-receipt-images">
+                                    </div>
+                                    <div class="order_pro_name">
+                                        <p>{{item.product.product_name}}</p>
+                                    </div>
+
+                                    <div class="order_size">
+                                        <p>Size : {{item.size}}</p>
+                                    </div>
+                                    <div class="order_quantity">
+                                        <p>Qty : {{item.quantity}}</p>
+                                    </div>
+                                    <div class="order_price">
+                                        <p>Rs.{{item.product.price}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <div class="order_details">
+                    <p class="odetails">Order Details</p>
+                </div>
+                <div class="order_numeber">
+                    <p class="onumber">Order ID - {{orders.id}}</p>
+                </div>
+                <div class="order_date">
+                    <p class="odate">Order Date: {{orders.date_ordered}}</p>
+                </div>
+                <div class="order_date">
+                    <p class="odate">Transaction ID: {{orders.transaction_id}}</p>
+                </div>
+                <div class="order_date">
+                    <p class="odate">Order Status: {{orders.status}}</p>
+                </div>
+                <div class="orders_total">
+                    <h5 class="ototal">Total paid: <span>Rs.{{orders.total}}</span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

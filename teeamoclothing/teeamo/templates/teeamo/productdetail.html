@@ -30,7 +30,7 @@
                <form method="POST" action='/teeamo/addtocart/'>
         {% csrf_token %}
                <select name="size" id="size"
-               class="addtocartbtn">
+               class="addtocartbtn" required>
                    <option value="">Select Size</option>
                    <option value="xxxl">XXXL</option>
                    <option value="xxl">XXL</option>
@@ -41,8 +41,8 @@
                    <option value="xsmall">Xsmall</option>
                </select>
                 <input type="hidden" name="productid" id="productid" value="{{ products.id }}">
-               <input type="number" name="quantity" id="quantity" value="1">
-               <button type="submit"  id="addtocartbtn ">Add To
+               <input type="number" name="quantity" id="quantity" value="1" min="1" max="100">
+               <button type="submit"  id="addtocartbtn">Add To
                Cart</button>
                </form>
                <h3>Product Description </h3>

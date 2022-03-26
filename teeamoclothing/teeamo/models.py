@@ -79,11 +79,13 @@ class User(AbstractUser):
     objects = UserManager()
 
 class Order(models.Model):
+
     customer=models.ForeignKey(User,on_delete=models.SET_NULL,blank=True,null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
+    total = models.IntegerField(default=0)
     transaction_id = models.CharField(max_length=200,null=True)
-
+    status = models.CharField(max_length=50,null=True,blank=True)
     def __str__(self):
         return str(self.id)
 

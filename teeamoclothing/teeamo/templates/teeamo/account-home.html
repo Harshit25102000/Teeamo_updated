@@ -1,0 +1,34 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} My Account {% endblock %}
+
+
+{% block body %}
+{% load static %}
+ <div class="account-page">
+    <div class="profile">
+      <div class="profile-details">
+
+        <h2 class="username"> Welcome {{ user }}</h2>
+
+      </div>
+      <ul class="account-page-ul">
+
+        <li class="account-page-ul-li"><a class="account-page-ul-li-a" href="{% url 'change_password' %}">Change
+        Password<span
+              class="account-page-ul-li-a-span"></span></a></li>
+
+        <li class="account-page-ul-li"><a class="account-page-ul-li-a" href="{% url 'my_orders' %}">My Orders <span
+              class="account-page-ul-li-a-span"></span></a></li>
+
+        <li class="account-page-ul-li"><a class="account-page-ul-li-a" href="{% url 'logout' %}">Logout<span
+              class="account-page-ul-li-a-span"></span></a></li>
+      </ul>
+    </div>
+    <div class="account-details">
+      <h2 class="home-page">Access all your account details from account dashboard<br>like Passwords , Previous Orders etc.</h2>
+
+
+    </div>
+  </div>
+{% endblock %}

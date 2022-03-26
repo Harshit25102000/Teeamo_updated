@@ -1,0 +1,70 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} My Account {% endblock %}
+
+
+{% block body %}
+{% load static %}
+
+ <div class="account-page">
+    <div class="profile">
+      <div class="profile-details">
+
+       <h2 class="username"> Welcome {{ user }}</h2>
+
+      </div>
+      <ul class="account-page-ul">
+
+        <li class="account-page-ul-li"><a class="account-page-ul-li-a" href="{% url 'change_password' %}">Change
+        Password<span
+              class="account-page-ul-li-a-span"></span></a></li>
+
+        <li class="account-page-ul-li"><a class="account-page-ul-li-a" href="{% url 'my_orders' %}">My Orders <span
+              class="account-page-ul-li-a-span"></span></a></li>
+
+        <li class="account-page-ul-li"><a class="account-page-ul-li-a" href="{% url 'logout' %}">Logout<span
+              class="account-page-ul-li-a-span"></span></a></li>
+      </ul>
+    </div>
+    <div class="account-details">
+        <h2 class="account-details-heading">MY ORDERS</h2>
+        <div class="small-container cart-page" >
+            <table>
+
+            {% for order,item in data %}
+
+                <tr style="cursor: pointer">
+                    <td> <a href="/teeamo/order_details/{{order.id}}" >
+                        <div class="cart-info">
+
+                            <img src="{{item.product.image1.url}}" alt="">
+                            <div>
+
+                                <p>Order Date - {{order.date_ordered}}</p>
+                                <small>Transaction ID : {{order.transaction_id}}</small>
+                                <br>
+                                <small>Order Status : {{order.status}}</small>
+                                <br>
+                                <small>Order ID : {{order.id}}</small>
+
+
+                            </div>
+                        </div></a>
+                    </td>
+                    <td><div class="number-input-checkout">
+
+                        <td>Rs {{order.total}}</td>
+                      </div></td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+
+    </div>
+  </div>
+  {% endblock %}

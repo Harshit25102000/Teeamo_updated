@@ -9,6 +9,7 @@
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
 
+
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +17,8 @@
           rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 
     <script type="text/javascript">
     var user = '{{request.user}}'
@@ -71,6 +74,8 @@ function getCookie(name) {
 
     </script>
 
+
+
 </head>
 
 <body>
@@ -91,7 +96,7 @@ function getCookie(name) {
         </li>
         <li><a href="{% url 'allproducts' %}">All Products</a></li>
         <li><a href="{% url 'about' %}">About</a></li>
-        <li><a href="#">My Account</a></li>
+        <li><a href="{% url 'myaccount' %}">My Account</a></li>
         <li>
             <form method="GET" action="/teeamo/searchresult">
                 <input type="text" name="search" id="search" type="search" placeholder="Find a black T-Shirt"
@@ -104,7 +109,12 @@ function getCookie(name) {
 
     </ul>
 </nav>
-
+{% for message in messages  %}
+      <div class="alert-message">
+  <span class="closebtn-message" onclick="this.parentElement.style.display='none';">&times;</span>
+  {{message}}
+</div>
+      {% endfor %}
 {% block body %}{% endblock %}
 
 <!---footer--->
@@ -144,7 +154,7 @@ function getCookie(name) {
                         <li>Instagram</li>
                     </a>
                     <a href="https://wa.me/919044592578">
-                        <li>Wattsapp</li>
+                        <li>Whatsapp</li>
                     </a>
                     <li>Call: 9029081071</li>
                 </ul>
