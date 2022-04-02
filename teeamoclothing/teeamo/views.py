@@ -343,6 +343,7 @@ def logout_view(request):
     return redirect('Home')
 #@csrf_exempt
 def cart(request):
+    print(request)
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer,complete=False)
@@ -368,7 +369,10 @@ def cart(request):
 
 
 #@csrf_exempt
+
+
 def checkout(request):
+
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer,complete=False)
@@ -427,47 +431,137 @@ def updateItem(request):
         orderItem.delete()
     return JsonResponse("item updated", safe=False)
 
+razorpay_id="rzp_test_fkWYYhtg7nX7St"
+razorpay_account_id="foGtBXCXYeEwYSkDrUEro1kl"
+from django.contrib.sites.shortcuts import get_current_site
+import razorpay
 
-
+razorpay_client = razorpay.Client(auth=(razorpay_id,razorpay_account_id))
 def processOrder(request):
-    transaction_id = datetime.datetime.now().timestamp()
-    data = json.loads(request.body)
-    if request.user.is_authenticated:
-        customer = request.user
-        order , created = Order.objects.get_or_create(customer=customer,complete=False)
-        total = data['formdata']['total']
-        print(transaction_id,total)
-        order.transaction_id= transaction_id
-        order.total = total
-        print(order.transaction_id, order.total)
-        if int(total) == order.get_cart_total :
-            print("true")
-            order.complete= True
-            order.status = 'Ordered'
+    if request.method == 'POST':
 
-        order.save()
-        if data['formdata']['phone2'] == "":
-            data['formdata']['phone2'] = "none"
-        if data['formdata']['additionalinfo'] == "":
-            data['formdata']['additionalinfo'] = "none"
+        if request.user.is_authenticated:
+            customer = request.user
+            order , created = Order.objects.get_or_create(customer=customer,complete=False)
 
-        ShippingAddress.objects.create(
-            customer= customer,
-            name=data['formdata']['name'],
-            email=data['formdata']['email'],
-            order=order,
-            phone1=data['formdata']['phone1'],
-            phone2=data['formdata']['phone2'],
-            address1=data['formdata']['address1'],
-            address2=data['formdata']['address2'],
-            city=data['formdata']['city'],
-            state=data['formdata']['state'],
-            pincode=data['formdata']['pincode'],
-            date_added=datetime.datetime.now(),
-            additionalinfo=data['formdata']['additionalinfo']
+            total = order.get_cart_total
+            name = request.POST['name']
+            email= request.POST['email']
+            phone1= request.POST['phone1']
+            phone2= request.POST['phone2']
+            address1= request.POST['address1']
+            address2= request.POST['address2']
+            city= request.POST['state']
+            state= request.POST['city']
+            pincode= request.POST['pincode']
+            date_added= datetime.datetime.now(),
+            additionalinfo= request.POST['additionalinfo']
+
+                                                                             
+
+            order.total = total
+            order.save()
+            if phone2 == "":
+                phone2 = "none"
+            if additionalinfo == "":
+                additionalinfo = "none"
+
+            ShippingAddress.objects.create(
+                customer= customer,
+                name=name,
+                email=email,
+                order=order,
+                phone1=phone1,
+                phone2=phone2,
+                address1=address1,
+                address2=address2,
+                city=  city,
+                state=state,
+                pincode=pincode,
+                date_added=date_added,
+                additionalinfo=additionalinfo
 
 
-            )
+                )
+
+
+            order_currency = 'INR'
+
+            callback_url = 'http://' + str(get_current_site(request)) + "/teeamo/handlerequest/"
+            print(callback_url)
+
+            razorpay_order = razorpay_client.order.create(
+                dict(amount=int(total) * 100, currency=order_currency, receipt=order.order_id,
+                     payment_capture='0'))
+            print(razorpay_order['id'])
+            order.razorpay_order_id = razorpay_order['id']
+            order.save()
+            context =  {'order': order, 'order_id': razorpay_order['id'], 'orderId': order.order_id,
+                           'final_price': int(total)*100, 'razorpay_merchant_id':razorpay_id,
+                           'callback_url': callback_url}
+            print(context)
+            print(request)
+
+            return render(request, 'teeamo/razorpaypayment.html', context)
+            #order.status = 'Ordered'
+
+
+
+
+
+
+        else:
+
+            return HttpResponse("User Not logged in")
+
+
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def handlerequest(request):
+    if request.method == "POST":
+        try:
+            payment_id = request.POST.get('razorpay_payment_id', '')
+            order_id = request.POST.get('razorpay_order_id','')
+            signature = request.POST.get('razorpay_signature','')
+            params_dict = {
+            'razorpay_order_id': order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+            }
+            try:
+                order_db = Order.objects.get(razorpay_order_id=order_id)
+
+            except:
+                return HttpResponse("505 Not Found")
+            order_db.razorpay_payment_id = payment_id
+            order_db.razorpay_signature = signature
+            order_db.save()
+            result = razorpay_client.utility.verify_payment_signature(params_dict)
+
+            if result==True:
+                amount = order_db.total * 100   #we have to pass in paisa
+                try:
+                    razorpay_client.payment.capture(payment_id, amount)
+                    order_db.payment_status = 1
+                    order_db.status = "Ordered"
+                    order_db.complete = True
+                    transaction_id = datetime.datetime.now().timestamp()
+                    order_db.transaction_id = transaction_id
+                    order_db.save()
+                    return render(request, 'teeamo/paymentsuccess.html')
+
+                except:
+                    order_db.payment_status = 2
+                    order_db.save()
+                    return render(request, 'teeamo/paymentfailed.html')
+
+            else:
+                order_db.payment_status = 2
+                order_db.save()
+                return render(request, 'teeamo/paymentfailed.html')
+
+        except:
+            return HttpResponse("505 not found")
+
     else:
-        print('User is not loggen in.. ')
-    return JsonResponse("payment complete", safe=False)
+        return HttpResponse("Not Allowed")

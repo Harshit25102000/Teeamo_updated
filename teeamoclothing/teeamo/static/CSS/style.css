@@ -1440,3 +1440,87 @@ font-size: 20px;
 #addtocartbtn:hover {
 background:#333333;
 }
+
+.pay-fail-h1{
+text-align-last: center;
+
+    margin: 5% 0%;
+}
+
+.pay-fail-h2{
+text-align-last: center;
+
+    margin: 1% 0%;
+}
+.pay-fail-h2-2{
+text-align-last: center;
+
+    margin: 0% 0%;
+}
+
+.pay-fail-btn{
+margin: 5% 44%;
+    width: 13%;
+    height: 5%;
+    color: white;
+    background-color: black;
+    border-radius: 13%;
+    font-size: 19px;
+    cursor: pointer;
+}
+
+.pay-fail-btn:hover{
+margin: 5% 44%;
+    width: 13%;
+    height: 5%;
+    color: white;
+    background-color:#262626;
+    border-radius: 13%;
+    font-size: 19px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px){
+  .pay-fail-h1{
+    font-size: 22px;
+  }
+
+  .pay-fail-h2{
+  font-size: 15px;
+  }
+
+  .pay-fail-h2-2{
+  font-size: 15px;
+  }
+
+  .pay-fail-btn{
+  font-size: 10px;
+    width: 19%;
+  }
+}
+
+.pay-sum-h1{
+margin-top:5%;
+}
+
+.pay-sum-h2-1{
+margin:2%;
+}
+
+.pay-sum-h2-2{
+text-align-last: center;
+}
+
+.pay-sum-btn{
+display: inline-block;
+    background-color: black;
+    color: #fff;
+    padding: 8px 30px;
+    margin: 2% 46%;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.pay-sum-btn:hover{
+background-color: #262626;
+}

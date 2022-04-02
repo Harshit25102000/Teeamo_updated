@@ -6,7 +6,7 @@
 <div class="row1">
     <div class="col-75">
         <div class="container1">
-            <form Id="checkout-form" action="/" method="POST">
+            <form Id="checkout-form" action='/teeamo/process_order/' method="POST">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-50">
@@ -93,7 +93,8 @@
 
                 </div>
 
-                <input id="make-payment" value="Make Payment" type="submit" class="checkoutpagebtn" value="Make
+                <input id="make-payment" value="Make Payment" type="submit" class="checkoutpagebtn"
+                value="Make
                 Payment">
             </form>
         </div>
@@ -120,66 +121,5 @@
     </div>
 </div>
 
-<script type="text/javascript">
 
-        var total = '{{order.get_cart_total}}'
-        if (user == 'AnonymousUser'){
-        console.log('anonymous')
-            document.getElementById('checkout-form').innerHTML = ''
-
-        }
-        var form = document.getElementById('checkout-form')
-        form.addEventListener('submit',function(e){
-        e.preventDefault()
-        })
-       document.getElementById('make-payment').addEventListener('click',function(e){
-       submitFormData()
-       })
-       function submitFormData(){
-       console.log('payment button clicked')
-
-       var FormData = {
-            'total':total,
-            'name':null,
-            'email':null,
-            'address1':null,
-            'address2':null,
-            'state':null,
-            'city':null,
-            'phone1':null,
-            'phone2':null,
-            'pincode':null,
-            'additionalinfo':null,
-       }
-
-       FormData.name = form.name.value
-       FormData.email = form.email.value
-       FormData.address1 = form.address1.value
-       FormData.address2 = form.address2.value
-       FormData.state = form.state.value
-       FormData.city = form.city.value
-       FormData.phone1 = form.phone1.value
-       FormData.phone2 = form.phone2.value
-       FormData.pincode = form.pincode.value
-       FormData.additionalinfo = form.additionalinfo.value
-
-       var url = "/teeamo/process_order/"
-       fetch(url,{
-       method:'POST',
-       headers:{
-       'Content-Type':'application/json',
-       'X-CSRFToken':csrftoken,
-       },
-       body:JSON.stringify({'formdata':FormData})
-       })
-       .then((response) => response.json())
-       .then((data)=> {
-        console.log('success',data);
-        alert('Transaction completed');
-        window.location.href = "{% url 'Home' %}"
-        })
-       }
-
-
-</script>
 {% endblock %}

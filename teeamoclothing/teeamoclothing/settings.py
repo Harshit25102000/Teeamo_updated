@@ -140,3 +140,6 @@ EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'harshit25102000@gmail.com'
 EMAIL_HOST_PASSWORD = 'Harshit@#25102000'
+
+#Razorpay settings
+

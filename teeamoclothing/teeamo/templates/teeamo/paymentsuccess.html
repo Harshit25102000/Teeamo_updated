@@ -1,0 +1,13 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} Payment Success {% endblock %}
+
+
+{% block body %}
+{% load static %}
+
+<h1 class="pay-fail-h1">Yayy ! We got your payment</h1>
+<h2 class="pay-fail-h2"> Thank you for shopping with us , your order will be delivered soon</h2>
+<h2 class="pay-fail-h2-2"> Please contact us for any queries</h2>
+<a href="{% url 'allproducts' %}"><button class="pay-fail-btn">Back to Shopping</button></a>
+{% endblock %}

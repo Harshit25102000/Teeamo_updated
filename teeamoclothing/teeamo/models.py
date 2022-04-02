@@ -78,14 +78,30 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+from django.utils import timezone
 class Order(models.Model):
+    payment_status_choices = (
+        (1, 'SUCCESS'),
+        (2, 'FAILURE'),
+        (3, 'PENDING'),
+    )
 
     customer=models.ForeignKey(User,on_delete=models.SET_NULL,blank=True,null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
     total = models.IntegerField(default=0)
+    order_id = models.CharField(unique=True, max_length=100, null=True, blank=True, default=None)
+    datetime_of_payment = models.DateTimeField(default=timezone.now)
     transaction_id = models.CharField(max_length=200,null=True)
     status = models.CharField(max_length=50,null=True,blank=True)
+    razorpay_order_id = models.CharField(max_length=500,null=True, blank=True)
+    razorpay_payment_id = models.CharField(max_length=500, null=True, blank=True)
+    razorpay_signature = models.CharField(max_length=500, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.order_id is None and self.datetime_of_payment and self.id:
+            self.order_id = self.datetime_of_payment.strftime('TEE%Y%m%dAMO') + str(self.id)
+        return super().save(*args, **kwargs)
     def __str__(self):
         return str(self.id)
 

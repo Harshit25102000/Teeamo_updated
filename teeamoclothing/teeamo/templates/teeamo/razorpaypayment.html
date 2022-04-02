@@ -1,0 +1,53 @@
+{% extends 'teeamo/basic.html' %}
+
+{% block title %} Make Payment {% endblock %}
+
+
+{% block body %}
+{% load static %}
+
+<div class="payment-info">
+  <div class="payment-container">
+    <h1 style="text-align:center;" class="pay-sum-h1">Make a safe and secure payment</h1>
+    <h2 style="text-align:center;" class="pay-sum-h2-1">We care for you so we make sure for your safety and
+    security</h2>
+    <h2 class="pay-sum-h2-2">Total Amount - Rs {{order.total}}</h2>
+    <br>
+    <button id="rzp-button1" class="pay-sum-btn" >Pay Now</button>
+  </div>
+
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  var options = {
+    "key": "{{razorpay_merchant_id}}", // Enter the Key ID generated from the Dashboard
+    "amount": {{final_price}}, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000
+
+    "currency": "INR",
+    "name": "Teeamo Clothing",
+    "description": "Make safe payment at Teeamo",
+    "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "callback_url": "{{callback_url}}",
+
+    "prefill": {
+      "name": "Good Name",
+      "email": "{{request.user.email}}",
+      "contact": "+91" + "{{request.user.phone}}"
+    },
+    "theme": {
+      "color": "#2BA977"
+    }
+  };
+  var rzp1 = new Razorpay(options);
+
+  document.getElementById('rzp-button1').onclick = function(e) {
+    console.log('button clicked' );
+    rzp1.open();
+    e.preventDefault();
+  }
+</script>
+
+{% endblock %}
+
+
